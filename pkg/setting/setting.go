@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	Cfg *int.File
+	Cfg *ini.File
 
 	RunMode      string
 	HTTPPort     int
@@ -20,7 +20,7 @@ var (
 )
 
 func init() {
-	var err err
+	var err error
 	Cfg, err = ini.Load("conf/app.ini")
 
 	if err != nil {
