@@ -20,6 +20,6 @@ func EditArticle(c *gin.Context) {
 
 }
 
-func DeleteAritcle(c *gin.Context) {
+func DeleteArticle(c *gin.Context) {
 
 }
