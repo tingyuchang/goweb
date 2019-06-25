@@ -3,9 +3,9 @@ package v1
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-	// "github.com/astaxie/beego/validation"
 	"github.com/Unknwon/com"
+	"github.com/astaxie/beego/validation"
+	"github.com/gin-gonic/gin"
 
 	"goweb/models"
 	"goweb/pkg/e"
@@ -43,6 +43,33 @@ func GetTags(c *gin.Context) {
 }
 
 func AddTag(c *gin.Context) {
+	name := c.Query("name")
+	state := com.StrTo(c.DefaultQuery("state", "0")).MustInt()
+	createdBy := c.Query("created_by")
+
+	valid := validation.Validation{}
+	valid.Required(name, "name").Message("Can't be empty")
+	valid.MaxSize(name, 100, "name").Message("Can't over 100 letters")
+	valid.Required(createdBy, "created_by").Message("Create by can't be empty")
+	valid.MaxSize(createdBy, 100, "created_by").Message("Create by can't over 100 letters")
+	valid.Range(state, 0, 1, "state").Message("state only allow 0 or 1")
+
+	code := e.INVALID_PARAMS
+
+	if !valid.HasErrors() {
+		if !models.ExistTagByName(name) {
+			code = e.SUCCESS
+			models.AddTag(name, state, createdBy)
+		} else {
+			code = e.ERROR_EXIST_TAG
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": make(map[string]string),
+	})
 }
 
 func EditTag(c *gin.Context) {
