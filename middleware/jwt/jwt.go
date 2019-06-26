@@ -10,13 +10,13 @@ import (
 	"goweb/pkg/util"
 )
 
-func JWT(gin.HandlerFunc) {
+func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var code int
 		var data interface{}
 
 		code = e.SUCCESS
-		token := c.response.Header.Get("token") // 從 header 拿
+		token := c.Request.Header.Get("token") // 從 header 拿
 		if token == "" {
 			code = e.INVALID_PARAMS
 		} else {
@@ -40,6 +40,5 @@ func JWT(gin.HandlerFunc) {
 		}
 
 		c.Next()
-
 	}
 }
