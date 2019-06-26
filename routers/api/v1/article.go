@@ -93,7 +93,7 @@ func AddArticle(c *gin.Context) {
 
 	valid := validation.Validation{}
 	valid.Min(tagId, 1, "tag_id").Message("ID must over 0")
-	valid.Required(title, "title").Message("Ttile can't be empty")
+	valid.Required(title, "title").Message("Title can't be empty")
 	valid.Required(desc, "desc").Message("Description can't be empty")
 	valid.Required(content, "content").Message("Content can't be empty")
 	valid.Required(createdBy, "created_by").Message("Creator can't be empty")
