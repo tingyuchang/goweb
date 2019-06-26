@@ -19,9 +19,9 @@ func getLogFilePath() string {
 }
 
 func getLogFileFullPath() string {
-	prefixPath = getLogFilePath()
+	prefixPath := getLogFilePath()
 	// log20190626.log
-	suffixPath = fmt.Sprintf("%s%s.%s", LogSaveName, time.Now().Format(TimeFormat), LogFileExt)
+	suffixPath := fmt.Sprintf("%s%s.%s", LogSaveName, time.Now().Format(TimeFormat), LogFileExt)
 
 	return fmt.Sprintf("%s%s", prefixPath, suffixPath)
 }
@@ -30,7 +30,7 @@ func openLogFile(filePath string) *os.File {
 	_, err := os.Stat(filePath)
 	switch {
 	case os.IsNotExist(err):
-		mkDir()
+		mkdir()
 	case os.IsPermission(err):
 		log.Fatalf("Permission :%v", err)
 	}

@@ -1,0 +1,2 @@
+[INFO][article.go:75]2019/06/26 17:15:12 [err.key: %s, err.message: %s state State only allow to be 0 or 1]
+[INFO][article.go:75]2019/06/26 17:15:12 [err.key: %s, err.message: %s tag_id Id must over 0]

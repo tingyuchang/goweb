@@ -9,6 +9,7 @@ import (
 
 	"goweb/models"
 	"goweb/pkg/e"
+	"goweb/pkg/logging"
 	"goweb/pkg/util"
 )
 
@@ -41,7 +42,9 @@ func GetAuth(c *gin.Context) {
 			}
 
 		} else {
-			code = e.ERROR_AUTH
+			for _, err := range valid.Errors {
+				logging.Info(err.Key, err.Message)
+			}
 		}
 	} else {
 		for _, err := range valid.Errors {
