@@ -9,7 +9,7 @@ import (
 	"goweb/pkg/setting"
 )
 
-var jwtSecret = []byte(setting.JwtSecret)
+var jwtSecret = []byte(setting.JWTSecret)
 
 type Claims struct {
 	Username string `json:"username"`
@@ -22,10 +22,10 @@ func GenerateToken(username, password string) (string, error) {
 	expiredTime := nowTime.Add(3 * time.Hour)
 
 	claims := Claims{
-		usename,
+		username,
 		password,
 		jwt.StandardClaims{
-			ExpiresAt: expireTime.Unix(),
+			ExpiresAt: expiredTime.Unix(),
 			Issuer:    "goweb",
 		},
 	}
