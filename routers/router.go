@@ -19,6 +19,7 @@ func InitRouter() *gin.Engine {
 	gin.SetMode(setting.RunMode)
 
 	r.POST("/auth", api.GetAuth)
+	r.POST("/user", api.AddAuth)
 
 	apiv1 := r.Group("/api/v1")
 	apiv1.Use(jwt.JWT())
