@@ -58,3 +58,28 @@ func GetAuth(c *gin.Context) {
 		"data": data,
 	})
 }
+
+func AddAuth(c *gin.Context) {
+	var auth Auth
+	c.ShouldBind(&auth)
+
+	valid := validation.Validation{}
+	ok, _ := valid.Valid(&auth)
+
+	code := e.INVALID_PARAMS
+
+	if ok {
+		if !models.ExistAuthByUsername(auth.Username) {
+			code = e.SUCCESS
+			models.AddAuth(auth.Username, auth.Password)
+		} else {
+			code = e.ERROR_EXIST_TAG
+		}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": make(map[string]string),
+	})
+}
